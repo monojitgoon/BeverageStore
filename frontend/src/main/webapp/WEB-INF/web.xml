@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+	version="3.0">
+
+	<display-name>BeverageStoreUI</display-name>
+
+	<!-- Servlets -->
+	<servlet>
+		<servlet-name>IncentiveServlet</servlet-name>
+		<servlet-class>de.uniba.dsg.dsam.client.IncentiveServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>IncentiveServlet</servlet-name>
+		<url-pattern>/incentives</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>BeverageServlet</servlet-name>
+		<servlet-class>de.uniba.dsg.dsam.client.BeveragesServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>BeverageServlet</servlet-name>
+		<url-pattern>/beverages</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>AssignIncentive</servlet-name>
+		<servlet-class>de.uniba.dsg.dsam.client.AssignIncentiveServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AssignIncentive</servlet-name>
+		<url-pattern>/addIncentivetoBeverage</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>CustomerOrder</servlet-name>
+		<servlet-class>de.uniba.dsg.dsam.client.CustomerOrderServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CustomerOrder</servlet-name>
+		<url-pattern>/orders</url-pattern>
+	</servlet-mapping>
+	
+	<!-- JSPs -->
+	
+	
+	
+	<!-- Welcome Files -->
+	  <welcome-file-list>
+		<welcome-file>main.jsp</welcome-file>
+	   </welcome-file-list>
+	
+</web-app>
