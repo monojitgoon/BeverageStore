@@ -1,47 +1,44 @@
-# RoomManagement JEE Demo
+# BeverageStore JEE Assignment
 
 ## Project Overview
 
-- `backend` includes the business functionality of the demo application
-- `frontend` includes the JSP frontend to manage divisions and room assignments
-- `ear` creates an EAR from all the subprojects for deployment inside Glassfish
-- `shared` includes all classes/interfaces that are used by the other projects
+- `backend` includes the business functionality of the BeverageStore application.
+- `frontend` includes the JSP frontend to manage Customer Orders and Salesman activities like add, update and delete beverages with incentives respectively. It also includes a JSP frontend for sending orders to the JMS queue that will be persisted by the MDB of the `backend` project. Similarly JSP front end is used for sending and retrieving data to and from beverageentity to persist and retrieve beverage related information to and from `backend` project.
+- `ear` creates an EAR from all the subprojects for deployment inside Glassfish.
+- `shared` includes all classes/interfaces that are used by the other projects.
 
 ## Configuration
 
 ### PostgreSQL Database
-   1. Setup Postgres Database driver:
+1. Setup Postgres Database driver:
    Get the correct JDBC driver JAR for your PostgreSQL version from https://jdbc.postgresql.org/
    Copy `resources/postgresql-*.*.****.jar` inside `[GlassFish directory]/glassfish/domains/[domain dir]/lib/`
 
-   2. Setup of Postgres Database:
-   [PostGres directory]/bin/pgAdmin3.exe (default password: admin)
+2. Setup of Postgres Database:
+   [PostGres directory]/pgAdmin4/bin/pgAdmin4.exe (default password: admin)
    Add new login role (you have to use a password as GlassFish JDBC Resources will require one) [Name: tester, Password: tester, Privileges: can_login: true]
-   Add new database [Name: BeverageStore, Owner: tester]
-   Execute `resources/db_tables.sql` inside pgAdmin to create all necessary tables.
+   Add new database [Name: BeverageStore, Owner: tester].
 
 ### Build project
+1. Check settings in `gradle.properties`, especially the path to Glassfish and postgres DB login credentials.
 
-1. Check settings in `ant.properties`, especially the path to Glassfish
- 
 2. In the project's root folder:
-Run target `gradlew start-glassfish`
-Run target `gradlew init`
+Run target `gradlew startGlassfish`
+Run target `gradlew initServer`
 Run target `gradlew build`
 Run target `gradlew deploy`
 
-Please see manual GF configuration (below) if there are problems with the `start-glassfish, init, deploy` tasks.
+Please see manual GF configuration (below) if there are problems with the `startGlassfish, initServer, deploy` tasks.
 
-### Play around
+### After Deployment of BeverageStore App on Glassfish
 
-- Start the application client inside your Browser http://localhost:8080/frontend 
-
+- Go to http://localhost:8080/frontend for placing order as customer, Add or Alter Beverage as Salesman and get the BI report as Admin or owner of the application. 
 
 ## Manual Glassfish Configuration
 
 Starting Glassfish: `[GlassFish directory]\glassfish\bin\startserv` and `[GlassFish directory]\glassfish\bin\stopserv`
 GF Admin Console: `http://localhost:4848` (username: admin, default password: adminadmin)
-        
+
 ### Setup JMS queue in GlassFish
         - Setup connection factory
               - Resources -> JMS Resources -> Connection Factories
@@ -51,18 +48,18 @@ GF Admin Console: `http://localhost:4848` (username: admin, default password: ad
         - Setup destination  
               - Resources -> JMS Resources -> Destination Resources
               - JNDI Name: BeverageStoreQueue
-              - Physical Destination Name: PhysicalBeverageStoreQueue
+              - Physical Destination Name: PhysicalQueue
               - Resource Type: javax.jms.Queue
-        
+
 ### Setup of JDBC Resource in GlassFish
   	- Setup a Connection Pool first:
           - Resources -> JDBC -> JDBC Connection Pools
-  	  - Pool Name: BeverageStoreCP
-  	  - use javax.sql.DataSource
+  	  - Pool Name: BeverageStore
+  	  - use javax.sql.XADataSource
   	  - use PostGres template
   	  - configure the following properties
   	  	- DatabaseName: BeverageStore
-  	  	- PortNumber: 5432
+  	  	- PortNumber: 5433
   	  	- User: tester
   	  	- Password: tester
   	 - Setup a JDBC-Resource using the Connection Pool you have created:
