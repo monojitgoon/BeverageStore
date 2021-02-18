@@ -1,4 +1,4 @@
-# BeverageStore JEE Assignment
+# BeverageStore- Distributed Systems and Middleware Assignment
 
 ## Project Overview
 
